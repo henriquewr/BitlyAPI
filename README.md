@@ -1,4 +1,7 @@
-# BitlyAPI
+# BitlyAPI 
+
+(this fork is a upgrade from .net framework to .net8)
+
 A C# implementation of the Bit.ly Api V4
 
 All methods are documented and have similar names to the ones in the docs.
