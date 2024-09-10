@@ -43,17 +43,17 @@ namespace BitlyAPI
             if (parameters != null && httpMethod == HttpMethod.Get)
             {
                 var parms = new StringBuilder();
-                parms.Append("?");
+                parms.Append('?');
                 var itemCount = 0;
                 foreach (var item in parameters)
                 {
                     parms.Append(item.Key);
-                    parms.Append("=");
+                    parms.Append('=');
                     parms.Append(WebUtility.UrlEncode(item.Value));
                     itemCount++;
                     if (itemCount != parameters.Count)
                     {
-                        parms.Append("&");
+                        parms.Append('&');
                     }
                 }
 
@@ -64,7 +64,7 @@ namespace BitlyAPI
             {
                 if (parameters != null && httpMethod != HttpMethod.Get)
                 {
-                        request.Content = new StringContent(JsonConvert.SerializeObject(parameters),Encoding.UTF8, "application/json");
+                    request.Content = new StringContent(JsonConvert.SerializeObject(parameters),Encoding.UTF8, "application/json");
                 }
                 request.Headers.Authorization = new AuthenticationHeaderValue(BearerAuthScheme, _accessToken);
                 using (var httpClient = new HttpClient())
@@ -83,7 +83,7 @@ namespace BitlyAPI
             return response.Groups;
         }
 
-        public async Task<String> PostShortenLink(string longUrl, string groupGuid = null, string domain = null)
+        public async Task<string> PostShortenLink(string longUrl, string groupGuid = null, string domain = null)
         {
             var result =  await PostShorten(longUrl, groupGuid,   domain);
             return result.Link;
@@ -130,12 +130,12 @@ namespace BitlyAPI
             {
                 var groups = await GetGroups();
                 var groupsArray = groups as BitlyGroup[] ?? groups.ToArray();
-                if (!groupsArray.Any())
+                if (groupsArray.Length == 0)
                 {
                     throw new Exception("Unable to find groups for user");
                 }
 
-                var group = groupsArray.First();
+                var group = groupsArray[0];
                 groupGuid = group.Guid;
             }
             var parameters = new Dictionary<string, string>
